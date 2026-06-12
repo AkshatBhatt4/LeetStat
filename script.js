@@ -1,4 +1,4 @@
-const users = ["rishabhjakhar04", "AdvikGupta2005", "BhattAkshat", "garvit4356", "udaypandita2005", "RobinHood_1803", "Mokshmalik999", "Eklavya_sharma", "Siddharth_kalra05", "HARDIK_ARORA_16", "tanmaygakhar", "_ishaaann_", "tanishqgoyal470", "ModitMalhotra", "timmiii", "nityaagoel","namit23340","mrfate","RuSKie147","diviirockgod6","aryan23143", "yay-code"];
+const users = ["rishabhjakhar04", "AdvikGupta2005", "BhattAkshat", "garvit4356", "udaypandita2005", "RobinHood_1803", "Mokshmalik999", "Eklavya_sharma", "Siddharth_kalra05", "HARDIK_ARORA_16", "tanmaygakhar", "_ishaaann_", "tanishqgoyal470", "ModitMalhotra", "timmiii", "nityaagoel","namit23340","mrfate","RuSKie147","diviirockgod6","aryan23143", "yay-code", "aryantayal05"];
 const realNames = {
   "rishabhjakhar04": "Rishabh Jakhar",
   "AdvikGupta2005": "Advik Gupta",
@@ -21,7 +21,8 @@ const realNames = {
   "RuSKie147": "Raj S. K.",
   "diviirockgod6": "Divyansh K. G.",
   "aryan23143": "Aryan Dutt",
-  "yay-code": "Akshit Bansal"
+  "yay-code": "Akshit Bansal",
+  "aryantayal05": "Aryan Tayal"
 };
 const cards = document.getElementById("profiles");
 let cache = {};
