@@ -7,33 +7,39 @@
   <link rel="icon" href="assets/icons/leetcode.svg" type="image/x-icon">
   <meta content="Display leetcode stats of Friends' profiles" property="og:description">
   <meta content="https://rishabh4jakhar.github.io/LeetStat/" property="og:url">
-  <meta content="#e89609" data-react-helmet="true" name="theme-color">  
+  <meta content="#e89609" data-react-helmet="true" name="theme-color">
   <title>Leetcode Stats</title>
   <link rel="stylesheet" href="style.css" />
+<base target="_blank">
 </head>
 <body>
-  <h1>Leetcode Stats</h1>
-  <div class="controls">
-  <label for="sortSelect">Sort by:</label>
-  <select id="sortSelect">
-    <option value="default">Custom</option>
-    <option value="total">Most Solved</option>
-    <option value="easy">Easy</option>
-    <option value="medium">Medium</option>
-    <option value="hard">Hard</option>
-    <option value="streak">Streak</option>
-  </select>
-  </div>  
-  <div id="profiles" class="card-container"></div>
+  <header class="site-header">
+    <div class="site-title">
+      <h1>Leetcode Stats</h1>
+      <p>Made with &hearts; &middot; Rishabh</p>
+    </div>
+    <div class="controls">
+      <label for="sortSelect">Sort by</label>
+      <select id="sortSelect">
+        <option value="default">Custom</option>
+        <option value="total">Most Solved</option>
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+        <option value="streak">Streak</option>
+      </select>
+    </div>
+  </header>
+
+  <div id="profiles"></div>
+
   <div id="profileModal" class="modal">
-      <div class="modal-content">
-
-          <span id="closeModal">&times;</span>
-
-          <div id="modalBody"></div>
-
-      </div>
+    <div class="modal-content">
+      <button id="closeModal" aria-label="Close">&times;</button>
+      <div id="modalBody"></div>
+    </div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
