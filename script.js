@@ -33,6 +33,7 @@ async function getStats(user) {
     const res =await fetch(`https://leetcode-stats.tashif.codes/${user}/profile`);
     const data = await res.json();
     if (data.status!=="success") {
+      console.error(`Error fetching data for ${user}:`, data.message);
       return {user,error:true};
     }
     const stats=data.submitStats.acSubmissionNum;
