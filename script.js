@@ -207,28 +207,28 @@ function renderSocials(data){
     if(data.github){
         html+=`
         <a href="${data.github}" target="_blank">
-            <img src="icons/github.svg" class="social-icon">
+            <img src="assets/icons/github.svg" class="social-icon">
         </a>`;
     }
 
     if(data.linkedin){
         html+=`
         <a href="${data.linkedin}" target="_blank">
-            <img src="icons/linkedin.svg" class="social-icon">
+            <img src="assets/icons/linkedin.svg" class="social-icon">
         </a>`;
     }
 
     if(data.twitter){
         html+=`
         <a href="${data.twitter}" target="_blank">
-            <img src="icons/twitter.svg" class="social-icon">
+            <img src="assets/icons/twitter.svg" class="social-icon">
         </a>`;
     }
 
     if(data.website){
         html+=`
         <a href="${data.website}" target="_blank">
-            <img src="icons/leetcode.svg" class="social-icon">
+            <img src="assets/icons/website.svg" class="social-icon">
         </a>`;
     }
 
