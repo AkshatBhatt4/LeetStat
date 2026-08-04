@@ -105,65 +105,8 @@ async function loadData() {
   renderCards();
 }
 
-function renderCards() {
-  const sortType=document.getElementById("sortSelect").value;
-  let all=[...cache];
-  if (sortType!=="default") {
-    all.sort((a, b) => {
-      switch (sortType) {
-        case "total":
-          return b.totalSolved - a.totalSolved;
-        case "easy":
-          return b.easySolved - a.easySolved;
-        case "medium":
-          return b.mediumSolved - a.mediumSolved;
-        case "hard":
-          return b.hardSolved - a.hardSolved;
-        case "streak":
-          return getStreak(b.submissionCalendar || {}) - getStreak(a.submissionCalendar || {});
-        default:
-          return cache;
-      }
-    });
-  }
-  cards.innerHTML = "";
-  all.forEach(data => {
-    const {user,totalSolved,easySolved,mediumSolved,hardSolved,submissionCalendar,recent,avatar,error}=data;
-    const userName = realNames[user]||user;
-    if (error){
-      cards.innerHTML+=`<div class="card not-done"><h3>${userName}</h3><p>❌ Could not load data.</p></div>`;
-      return;
-    }
-    const glow=solvedToday(submissionCalendar || {}) ? "done-today" : "not-done";
-    const streak=getStreak(submissionCalendar || {});
-    // If the profile is private, recent will be ["Private Profile"], so we check for that before rendering
-    const recentHtml = recent[0]==="Private Profile" ? `<p><em>Recent submissions are private.</em><br>Go bully them to make it public</p>` : recent.map(q => {
-      const link = `https://leetcode.com/problems/${q.titleSlug}`;
-        return `
-          <div class="recent-item">
-            <a href="${link}" target="_blank"><strong>${q.title}</strong></a>
-            <span class="tag">${q.lang}</span>
-          </div>`;
-      }).join("");
-    cards.innerHTML += `
-      <div class="card ${glow} onclick="openModal('${user}')">
-        <div class="card-header">
-        <h3><a href="https://leetcode.com/${user}" target="_blank" class="profile-link" onclick="event.stopPropagation()">${userName}</a></h3>
-        <img src="${avatar}" class="avatar ${glow}">
-        </div>
-        <p><strong>Total Solved:</strong> ${totalSolved}</p>
-        <p>Easy: ${easySolved}, Medium: ${mediumSolved}, Hard: ${hardSolved}</p>
-        <p><strong>Streak:</strong> ${streak} days</p>
-        <div class="recent-list">
-          <p><strong>Last 3 solved:</strong></p>
-          ${recentHtml}
-        </div>
-      </div>`;
-  });
-}
-
 function openModal(username){
-
+    console.log("Opening modal for", username); 
     const data = cache.find(x=>x.user===username);
 
     if(!data) return;
@@ -234,6 +177,65 @@ function renderSocials(data){
 
     document.getElementById("socialLinks").innerHTML=html;
 }
+
+
+function renderCards() {
+  const sortType=document.getElementById("sortSelect").value;
+  let all=[...cache];
+  if (sortType!=="default") {
+    all.sort((a, b) => {
+      switch (sortType) {
+        case "total":
+          return b.totalSolved - a.totalSolved;
+        case "easy":
+          return b.easySolved - a.easySolved;
+        case "medium":
+          return b.mediumSolved - a.mediumSolved;
+        case "hard":
+          return b.hardSolved - a.hardSolved;
+        case "streak":
+          return getStreak(b.submissionCalendar || {}) - getStreak(a.submissionCalendar || {});
+        default:
+          return cache;
+      }
+    });
+  }
+  cards.innerHTML = "";
+  all.forEach(data => {
+    const {user,totalSolved,easySolved,mediumSolved,hardSolved,submissionCalendar,recent,avatar,error}=data;
+    const userName = realNames[user]||user;
+    if (error){
+      cards.innerHTML+=`<div class="card not-done"><h3>${userName}</h3><p>❌ Could not load data.</p></div>`;
+      return;
+    }
+    const glow=solvedToday(submissionCalendar || {}) ? "done-today" : "not-done";
+    const streak=getStreak(submissionCalendar || {});
+    // If the profile is private, recent will be ["Private Profile"], so we check for that before rendering
+    const recentHtml = recent[0]==="Private Profile" ? `<p><em>Recent submissions are private.</em><br>Go bully them to make it public</p>` : recent.map(q => {
+      const link = `https://leetcode.com/problems/${q.titleSlug}`;
+        return `
+          <div class="recent-item">
+            <a href="${link}" target="_blank"><strong>${q.title}</strong></a>
+            <span class="tag">${q.lang}</span>
+          </div>`;
+      }).join("");
+    cards.innerHTML += `
+      <div class="card ${glow}" onclick="openModal('${user}')">
+        <div class="card-header">
+        <h3><a href="https://leetcode.com/${user}" target="_blank" class="profile-link" onclick="event.stopPropagation()">${userName}</a></h3>
+        <img src="${avatar}" class="avatar ${glow}">
+        </div>
+        <p><strong>Total Solved:</strong> ${totalSolved}</p>
+        <p>Easy: ${easySolved}, Medium: ${mediumSolved}, Hard: ${hardSolved}</p>
+        <p><strong>Streak:</strong> ${streak} days</p>
+        <div class="recent-list">
+          <p><strong>Last 3 solved:</strong></p>
+          ${recentHtml}
+        </div>
+      </div>`;
+  });
+}
+
 
 const modal=document.getElementById("profileModal");
 

@@ -155,3 +155,7 @@ a:hover {
 .social-icon:hover{
     transform:scale(1.15);
 }
+
+.card {
+    cursor: pointer;
+}
