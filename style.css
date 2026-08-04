@@ -159,3 +159,38 @@ a:hover {
 .card {
     cursor: pointer;
 }
+
+.heatmap{
+    margin-top:12px;
+    display:grid;
+
+    grid-template-columns:repeat(6,1fr);
+
+    gap:3px;
+}
+
+.heat{
+    width:100%;
+    aspect-ratio:1;
+    border-radius:2px;
+}
+
+.level-0{
+    background:#2a2a2a;
+}
+
+.level-1{
+    background:#0e4429;
+}
+
+.level-2{
+    background:#006d32;
+}
+
+.level-3{
+    background:#26a641;
+}
+
+.level-4{
+    background:#39d353;
+}

@@ -1,3 +1,4 @@
+//const users = ["garvit4356"] // Test
 const users = ["rishabhjakhar04", "AdvikGupta2005", "BhattAkshat", "garvit4356", "udaypandita2005", "RobinHood_1803", "Mokshmalik999", "Eklavya_sharma", "Siddharth_kalra05", "HARDIK_ARORA_16", "tanmaygakhar", "_ishaaann_", "tanishqgoyal470", "ModitMalhotra", "timmiii", "nityaagoel","namit23340","mrfate","RuSKie147","diviirockgod6","aryan23143", "yay-code", "aryantayal05"];
 const realNames = {
   "rishabhjakhar04": "Rishabh Jakhar",
@@ -69,6 +70,21 @@ async function getStats(user) {
   }
 }
 
+async function getHeatmap(user) {
+    try {
+        const res = await fetch(`https://leetcode-stats.tashif.codes/${user}/heatmap`);
+        const data = await res.json();
+
+        if (data.status !== "success") {
+            return null;
+        }
+
+        return data;
+    } catch {
+        return null;
+    }
+}
+
 function getStreak(cal) {
   const today=Math.floor(Date.now()/1000/86400)*86400;
   let streak=0;
@@ -100,9 +116,35 @@ async function loadData() {
   cards.innerHTML="<p>Loading...</p>";
   cache=await Promise.all(users.map(async u => {
     const stat=await getStats(u);
+    if (!stat.error) {
+      stat.heatmap=await getHeatmap(u);
+    }
     return stat;
   }));
   renderCards();
+}
+
+function renderMiniHeatmap(heatmap) {
+
+    if (!heatmap || !heatmap.dailyContributions)
+        return "";
+
+    const last30 = heatmap.dailyContributions.slice(-30);
+
+    let html = `<div class="heatmap">`;
+
+    last30.forEach(day => {
+
+        html += `
+            <div
+                class="heat level-${day.level}"
+                title="${day.date}: ${day.count} submissions">
+            </div>`;
+    });
+
+    html += "</div>";
+
+    return html;
 }
 
 function openModal(username){
@@ -219,6 +261,9 @@ function renderCards() {
             <span class="tag">${q.lang}</span>
           </div>`;
       }).join("");
+
+    const heatmapHtml = renderMiniHeatmap(data.heatmap);  
+
     cards.innerHTML += `
       <div class="card ${glow}" onclick="openModal('${user}')">
         <div class="card-header">
@@ -232,6 +277,7 @@ function renderCards() {
           <p><strong>Last 3 solved:</strong></p>
           ${recentHtml}
         </div>
+        ${heatmapHtml}
       </div>`;
   });
 }
