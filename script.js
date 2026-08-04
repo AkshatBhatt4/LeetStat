@@ -35,17 +35,35 @@ async function getStats(user) {
       return {user,error:true};
     }
     const stats=data.submitStats.acSubmissionNum;
-    return {
-      user: user,
+  return {
+      user,
       totalSolved: stats[0].count,
       easySolved: stats[1].count,
       mediumSolved: stats[2].count,
       hardSolved: stats[3].count,
+
       submissionCalendar: data.submissionCalendar,
-      recent: data.recentSubmissions.slice(0,3).length === 0 ? ["Private Profile"] : data.recentSubmissions.slice(0,3), // If .recentSubmissions is empty, return "Private Profile"
+      recent: data.recentSubmissions.length // Check if recentSubmissions is available
+          ? data.recentSubmissions.slice(0,3)
+          : ["Private Profile"],
+
       avatar: data.profile.userAvatar,
-      error: false      
-    };
+
+      // NEW
+      profile: data.profile,
+      badges: data.badges,
+      activeBadge: data.activeBadge,
+      github: data.githubUrl,
+      linkedin: data.linkedinUrl,
+      twitter: data.twitterUrl,
+      website: data.website,
+      company: data.company,
+      school: data.school,
+      country: data.countryName,
+      ranking: data.profile.ranking,
+      reputation: data.profile.reputation,
+      error:false
+  }
   } catch {
     return {user,error:true};
   }
@@ -128,9 +146,9 @@ function renderCards() {
           </div>`;
       }).join("");
     cards.innerHTML += `
-      <div class="card ${glow}">
+      <div class="card ${glow} onclick="openModal('${user}')">
         <div class="card-header">
-        <h3><a href="https://leetcode.com/${user}" target="_blank">${userName}</a></h3>
+        <h3><a href="https://leetcode.com/${user}" target="_blank" class="profile-link" onclick="event.stopPropagation()">${userName}</a></h3>
         <img src="${avatar}" class="avatar ${glow}">
         </div>
         <p><strong>Total Solved:</strong> ${totalSolved}</p>
@@ -142,6 +160,44 @@ function renderCards() {
         </div>
       </div>`;
   });
+}
+
+function openModal(username){
+
+    const data = cache.find(x=>x.user===username);
+
+    if(!data) return;
+
+    const body=document.getElementById("modalBody");
+
+    body.innerHTML=`
+        <h2>${realNames[username]}</h2>
+
+        <img class="modal-avatar" src="${data.avatar}">
+
+        <p>Total Solved : ${data.totalSolved}</p>
+
+        <p>Ranking : ${data.ranking ?? "N/A"}</p>
+
+        <p>Company : ${data.company || "-"}</p>
+
+        <p>School : ${data.school || "-"}</p>
+
+        <p>Country : ${data.country || "-"}</p>
+
+        <p>${data.profile.aboutMe || ""}</p>
+
+        <div id="socialLinks"></div>
+
+        <img
+            src="https://leetcode-stats.tashif.codes/${username}/stats/svg"
+            style="width:100%;margin-top:20px;"
+        >
+    `;
+
+    renderSocials(data);
+
+    document.getElementById("profileModal").style.display="block";
 }
 
 loadData();
