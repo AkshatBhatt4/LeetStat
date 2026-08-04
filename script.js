@@ -200,6 +200,51 @@ function openModal(username){
     document.getElementById("profileModal").style.display="block";
 }
 
+function renderSocials(data){
+
+    let html="";
+
+    if(data.github){
+        html+=`
+        <a href="${data.github}" target="_blank">
+            <img src="icons/github.svg" class="social-icon">
+        </a>`;
+    }
+
+    if(data.linkedin){
+        html+=`
+        <a href="${data.linkedin}" target="_blank">
+            <img src="icons/linkedin.svg" class="social-icon">
+        </a>`;
+    }
+
+    if(data.twitter){
+        html+=`
+        <a href="${data.twitter}" target="_blank">
+            <img src="icons/twitter.svg" class="social-icon">
+        </a>`;
+    }
+
+    if(data.website){
+        html+=`
+        <a href="${data.website}" target="_blank">
+            <img src="icons/leetcode.svg" class="social-icon">
+        </a>`;
+    }
+
+    document.getElementById("socialLinks").innerHTML=html;
+}
+
+const modal=document.getElementById("profileModal");
+
+document.getElementById("closeModal").onclick=()=>{
+    modal.style.display="none";
+};
+
+window.onclick=(e)=>{
+    if(e.target===modal)
+        modal.style.display="none";
+};
 loadData();
 document.getElementById("sortSelect").addEventListener("change", () => {
   renderCards();
