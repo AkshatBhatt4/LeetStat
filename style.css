@@ -144,3 +144,14 @@ a:hover {
     font-size:28px;
     cursor:pointer;
 }
+
+.social-icon{
+    width:28px;
+    height:28px;
+    margin-right:10px;
+    transition:.2s;
+}
+
+.social-icon:hover{
+    transform:scale(1.15);
+}
